@@ -1,4 +1,14 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   intersection.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: melghoud <melghoud@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/21 16:43:48 by melghoud          #+#    #+#             */
+/*   Updated: 2021/04/21 16:48:57 by melghoud         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
@@ -9,7 +19,11 @@ void	calculate_vert_ray_intercept(t_struct *data, float ray_angle)
 	data->y_intercept = data->y + (data->x_intercept - data->x) *
 		tanf(ray_angle);
 	data->dx = SQUARE_SIZE;
-	data->dx *= data->is_ray_facing_left ? -1 : 1;
+
+	if (data->is_ray_facing_left)
+		data->dx *= -1;
+	else
+		data->dx *= 1;
 	data->dy = SQUARE_SIZE * tanf(ray_angle);
 	data->dy *= (data->is_ray_facing_up && data->dy > 0) ? -1 : 1;
 	data->dy *= (data->is_ray_facing_down && data->dy < 0) ? -1 : 1;

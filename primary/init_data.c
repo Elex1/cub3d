@@ -1,4 +1,14 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_data.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: melghoud <melghoud@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/21 16:34:17 by melghoud          #+#    #+#             */
+/*   Updated: 2021/04/21 16:43:24 by melghoud         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
@@ -63,7 +73,7 @@ void	init_player(t_struct *data)
 void	set_up_player(t_struct *data)
 {
 	data->orientation = (unsigned char)data->map[data->i_player]
-		[data->j_player];
+	[data->j_player];
 	if (data->orientation == 'N')
 		data->rotation_angle = RAD(270);
 	else if (data->orientation == 'W')
@@ -74,18 +84,22 @@ void	set_up_player(t_struct *data)
 		data->rotation_angle = RAD(0);
 }
 
-int		set_up_window(t_struct *data)
+int	set_up_window(t_struct *data)
 {
-	if ((data->mlx_ptr = mlx_init()) == NULL)
+	data->mlx_ptr = mlx_init();
+	data->win_ptr = mlx_new_window(data->mlx_ptr,
+			data->w_width, data->w_height, "cub3D");
+	data->img_ptr = mlx_new_image(data->mlx_ptr,
+			data->w_width, data->w_height);
+	data->img_data = mlx_get_data_addr(data->img_ptr, &data->bpp,
+			&data->size_line, &data->endian);
+	if (data->mlx_ptr == NULL)
 		return (FALSE);
-	if ((data->win_ptr = mlx_new_window(data->mlx_ptr,
-					data->w_width, data->w_height, "cub3D")) == NULL)
+	if (data->win_ptr == NULL)
 		return (FALSE);
-	if ((data->img_ptr = mlx_new_image(data->mlx_ptr,
-					data->w_width, data->w_height)) == NULL)
+	if (data->img_ptr == NULL)
 		return (FALSE);
-	if ((data->img_data = mlx_get_data_addr(data->img_ptr, &data->bpp,
-					&data->size_line, &data->endian)) == NULL)
+	if (data->img_data == NULL)
 		return (FALSE);
 	data->img_data_bmp = (int *)mlx_get_data_addr(data->img_ptr, &data->bpp,
 			&data->size_line, &data->endian);

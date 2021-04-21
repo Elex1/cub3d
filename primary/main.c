@@ -1,7 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: melghoud <melghoud@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/21 16:51:34 by melghoud          #+#    #+#             */
+/*   Updated: 2021/04/21 16:53:40 by melghoud         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-int		update(t_struct *data)
+int	update(t_struct *data)
 {
 	cast_rays(data);
 	render_walls(data);
@@ -15,11 +26,11 @@ int		update(t_struct *data)
 	if (data->reset)
 		init_player(data);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
-			data->img_ptr, 0, 0);
+		data->img_ptr, 0, 0);
 	return (FALSE);
 }
 
-int		initialize_window(t_struct *data)
+int	initialize_window(t_struct *data)
 {
 	set_up_data(data);
 	if (!(set_up_window(data)))
@@ -33,9 +44,9 @@ int		initialize_window(t_struct *data)
 	return (TRUE);
 }
 
-int		are_valid_args(int ac, char **av, int g_screenshot)
+int	are_valid_args(int ac, char **av, int g_screenshot)
 {
-	size_t av_len;
+	size_t	av_len;
 
 	if (av[1] != NULL)
 		av_len = ft_strlen(av[1]) - 1;
@@ -47,7 +58,7 @@ int		are_valid_args(int ac, char **av, int g_screenshot)
 		if (ac == 2)
 			return (TRUE);
 		if (ac == 3 && ft_strlen(av[2]) == 6
-				&& !ft_strncmp(av[2], "--save", ft_strlen(av[2])))
+			&& !ft_strncmp(av[2], "--save", ft_strlen(av[2])))
 		{
 			g_screenshot = TRUE;
 			return (TRUE);
@@ -56,13 +67,12 @@ int		are_valid_args(int ac, char **av, int g_screenshot)
 	return (FALSE);
 }
 
-int		main(int ac, char *av[])
+int	main(int ac, char *av[])
 {
-	t_struct *data;
+	t_struct	*data;
+	int			g_screenshot;
 
-	int g_screenshot;
 	g_screenshot = 0;
-
 	if (!are_valid_args(ac, av, g_screenshot))
 		error("\e[0;31m args are not valid\n");
 	data = malloc(sizeof(t_struct));

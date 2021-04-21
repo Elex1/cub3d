@@ -1,19 +1,37 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   events.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: melghoud <melghoud@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/21 16:16:40 by melghoud          #+#    #+#             */
+/*   Updated: 2021/04/21 16:33:28 by melghoud         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../include/cub3d.h"
+
+void	func(int *v, int x1, int x2)
+{
+	if (*v == 0)
+		*v = x1;
+	else
+		*v = x2;
+}
 
 int	hud_key_pressed(int keycode, t_struct *data)
 {
 	if (keycode == 15)
-		data->reset = data->reset == 0 ? 1 : 0;
+		func(&data->reset, 1, 0);
 	if (keycode == 257)
-		data->shift = data->shift == 0 ? 1 : 0;
+		func(&data->shift, 1, 0);
 	if (keycode == 46)
-		data->m = data->m == 0 ? 1 : 0;
+		func(&data->m, 1, 0);
 	if (keycode == 4)
-		data->h = data->h == 0 ? 1 : 0;
+		func(&data->h, 1, 0);
 	if (keycode == 17)
-		data->t = data->t == 0 ? 1 : 0;
+		func(&data->t, 1, 0);
 	if (keycode == 53)
 	{
 		destruct(data);
@@ -49,9 +67,9 @@ int	key_pressed(int keycode, t_struct *data)
 int	key_released(int keycode, t_struct *data)
 {
 	if (keycode == 15)
-		data->reset = data->reset == 1 ? 0 : 1;
+		func(&data->reset, 0, 1);
 	if (keycode == 257)
-		data->shift = data->shift == 1 ? 0 : 1;
+		func(&data->shift, 0, 1);
 	if (keycode == 13 || keycode == 126)
 		data->walk_direction = 0;
 	if (keycode == 1 || keycode == 125)
@@ -76,5 +94,5 @@ int	key_released(int keycode, t_struct *data)
 int	is_not_valid_xpm(t_struct *data)
 {
 	return (!data->xpm_ptr1 || !data->xpm_ptr2 || !data->xpm_ptr3
-			|| !data->xpm_ptr4 || !data->sprite_xpm);
+		|| !data->xpm_ptr4 || !data->sprite_xpm);
 }
